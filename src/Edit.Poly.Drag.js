@@ -2,11 +2,11 @@
  * Dragging routines for poly handler
  */
 
-L.Edit.Poly.include( /** @lends L.Edit.Poly.prototype */ {
+L.Edit.PolyVerticesEdit.include( /** @lends L.Edit.PolyVerticesEdit.prototype */ {
 
   // store methods to call them in overrides
-  __createMarker: L.Edit.Poly.prototype._createMarker,
-  __removeMarker: L.Edit.Poly.prototype._removeMarker,
+  __createMarker: L.Edit.PolyVerticesEdit.prototype._createMarker,
+  __removeMarker: L.Edit.PolyVerticesEdit.prototype._removeMarker,
 
   /**
    * @override
@@ -106,14 +106,14 @@ L.Edit.Poly.include( /** @lends L.Edit.Poly.prototype */ {
    * @param  {L.MouseEvent} evt
    */
   _onStopDragFeature: function(evt) {
-    var polygon = this._poly;
-    for (var i = 0, len = polygon._latlngs.length; i < len; i++) {
+    // var polygon = this._poly;
+    for (var i = 0, len = this._latlngs.length; i < len; i++) {
       // update marker
       var marker = this._markers[i];
-      marker.setLatLng(polygon._latlngs[i]);
+      marker.setLatLng(this._latlngs[i]);
 
       // this one's needed to update the path
-      marker._origLatLng = polygon._latlngs[i];
+      marker._origLatLng = this._latlngs[i];
       if (marker._middleLeft) {
         marker._middleLeft.setLatLng(this._getMiddleLatLng(marker._prev, marker));
       }
@@ -178,7 +178,7 @@ L.Edit.Poly.include( /** @lends L.Edit.Poly.prototype */ {
 /**
  * @type {L.DivIcon}
  */
-L.Edit.Poly.prototype.options.moveIcon = new L.DivIcon({
+L.Edit.PolyVerticesEdit.prototype.options.moveIcon = new L.DivIcon({
   iconSize: new L.Point(8, 8),
   className: 'leaflet-div-icon leaflet-editing-icon leaflet-edit-move'
 });
@@ -187,6 +187,6 @@ L.Edit.Poly.prototype.options.moveIcon = new L.DivIcon({
  * Override this if you don't want the central marker
  * @type {Boolean}
  */
-L.Edit.Poly.mergeOptions({
+L.Edit.PolyVerticesEdit.mergeOptions({
   moveMarker: false
 });
